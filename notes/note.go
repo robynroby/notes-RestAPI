@@ -1,10 +1,8 @@
 package note
 
 import (
-	"github.com/go-playground/locales/id"
 	"github.com/gofiber/fiber"
 	"github.com/robynroby/go-Fiber/database"
-	"golang.org/x/mod/sumdb/note"
 	"gorm.io/gorm"
 )
 
