@@ -63,7 +63,7 @@ const Note = () => {
 
   let deleteNote = async (e) => {
       e.preventDefault()
-      await fetch(`/notes/${params.id}`, {method:'DELETE'})
+      await fetch(`http://localhost:8000/notes/${params.id}`, {method:'DELETE'})
       navigate('/')
 
   }

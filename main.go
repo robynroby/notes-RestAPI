@@ -34,29 +34,31 @@ func initDatabase() {
 }
 
 func main(){
+	// initilize database
+	initDatabase()
+
+	// create new fiber app
 	app := fiber.New()
+
+	
+	
+
+	// setup routes
 	setupRoutes(app)
 
-	app.Use(cors.New())
-	initDatabase()
+	// listen on port 8000
 	app.Listen(8000)
+
+	// default fiber cors
+	app.Use(cors.New(cors.Config{
+        AllowHeaders:     "Origin, Content-Type, Accept, Content-Length, Accept-Language, Accept-Encoding, Connection, Access-Control-Allow-Origin",
+        AllowOrigins:     "*",
+        AllowCredentials: true,
+        AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
+    }))
+
 }
 
 
 
 
-// func main() {
-
-// 	initDatabase()
-// 	// defer database.DBConn.Close()
-
-// 	app := fiber.New()
-
-// 	// default fiber cors
-// 	app.Use(cors.New())
-	
-// 	// app.Use(middleware.Logger())
-// 	setupRoutes(app)
-
-// 	app.Listen(8000)
-// }
