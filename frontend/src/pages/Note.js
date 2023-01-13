@@ -32,11 +32,11 @@ const Note = () => {
 
     console.log('Submit data triggerd...')
 
-    let url = '/notes'
+    let url = 'http://localhost:8000/notes'
     let method = 'POST'
 
     if (params.id !== 'add'){
-        url = `/notes/${params.id}`
+        url = `http://localhost:8000/notes/${params.id}`
         method = 'PUT'
     }
 
@@ -77,7 +77,7 @@ const Note = () => {
             </Link>
         </h3>
 
-        {noteId != 'add' && <button onClick={deleteNote}>Delete</button>}
+        {noteId !== 'add' && <button onClick={deleteNote}>Delete</button>}
       </div>
 
       <textarea onChange={(e) => { setNote({ ...note, 'body': e.target.value}) }} placeholder="Edit note" value={note?.body} required></textarea>
