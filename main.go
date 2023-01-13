@@ -6,11 +6,11 @@ import (
 	"github.com/gofiber/fiber"
 	"github.com/robynroby/go-Fiber/database"
 	note "github.com/robynroby/go-Fiber/notes"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-
 	// "github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
+	// "github.com/gofiber/fiber/middleware"
 )
 
 func setupRoutes(app *fiber.App) {
@@ -33,16 +33,30 @@ func initDatabase() {
 	fmt.Println("Database Migrated")
 }
 
-func main() {
-
-	initDatabase()
-	// defer database.DBConn.Close()
-
+func main(){
 	app := fiber.New()
-
-	app.Use(cors.New()) // CORS middleware
-
 	setupRoutes(app)
 
+	app.Use(cors.New())
+	initDatabase()
 	app.Listen(8000)
 }
+
+
+
+
+// func main() {
+
+// 	initDatabase()
+// 	// defer database.DBConn.Close()
+
+// 	app := fiber.New()
+
+// 	// default fiber cors
+// 	app.Use(cors.New())
+	
+// 	// app.Use(middleware.Logger())
+// 	setupRoutes(app)
+
+// 	app.Listen(8000)
+// }
