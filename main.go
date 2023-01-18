@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/robynroby/go-Fiber/database"
 	note "github.com/robynroby/go-Fiber/notes"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	// "github.com/gofiber/fiber/v2"
@@ -27,21 +27,26 @@ func initDatabase() {
 		panic("Failed to connect to Database")
 	}
 
-	// fmt.PrintLn("Database successfully opened. ")
+	fmt.Println("Database successfully opened. ")
 
 	database.DBConn.AutoMigrate(&note.Note{})
 	fmt.Println("Database Migrated")
 }
 
-func main(){
+func main() {
 	// initilize database
 	initDatabase()
 
 	// create new fiber app
 	app := fiber.New()
 
-	
-	
+	// default fiber cors
+	app.Use(cors.New(cors.Config{
+		AllowHeaders:     "Origin, Content-Type, Accept, Content-Length, Accept-Language, Accept-Encoding, Connection, Access-Control-Allow-Origin",
+		AllowOrigins:     "*",
+		AllowCredentials: true,
+		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
+	}))
 
 	// setup routes
 	setupRoutes(app)
@@ -49,16 +54,4 @@ func main(){
 	// listen on port 8000
 	app.Listen(8000)
 
-	// default fiber cors
-	app.Use(cors.New(cors.Config{
-        AllowHeaders:     "Origin, Content-Type, Accept, Content-Length, Accept-Language, Accept-Encoding, Connection, Access-Control-Allow-Origin",
-        AllowOrigins:     "*",
-        AllowCredentials: true,
-        AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
-    }))
-
 }
-
-
-
-
