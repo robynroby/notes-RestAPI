@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/robynroby/go-Fiber/database"
 	note "github.com/robynroby/go-Fiber/notes"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	// "github.com/gofiber/fiber/v2"
 	// "github.com/gofiber/fiber/middleware"
@@ -22,7 +22,7 @@ func setupRoutes(app *fiber.App) {
 
 func initDatabase() {
 	var err error
-	database.DBConn, err = gorm.Open(sqlite.Open("notes.db"), &gorm.Config{})
+	database.DBConn, err = gorm.Open(mysql.Open("root:root@notes/notes"), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect to Database")
 	}
@@ -42,12 +42,8 @@ func main() {
 
 	// default fiber cors
 	app.Use(cors.New(cors.Config{
-		AllowHeaders:     "Origin, Content-Type, Accept, Content-Length, Accept-Language, Accept-Encoding, Connection, Access-Control-Allow-Origin",
-		AllowOrigins:     "*",
 		AllowCredentials: true,
-		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
 	}))
-
 	// setup routes
 	setupRoutes(app)
 
